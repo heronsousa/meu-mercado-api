@@ -6,7 +6,7 @@ import { pgTable, uuid, text, timestamp, numeric } from "drizzle-orm/pg-core";
 export const nfce = pgTable("nfce", {
   id: uuid().primaryKey(),
   key: text().notNull().unique(),
-  market: text().notNull(),
+  store: text().notNull(),
   city: text().notNull(),
   state: text().notNull(),
   neighborhood: text().notNull(),
@@ -18,20 +18,25 @@ export const nfce = pgTable("nfce", {
 
 export const product = pgTable("product", {
   id: uuid().primaryKey(),
-  description: text("").notNull(),
-  ncm: text("").notNull(),
-  price: numeric("").notNull(),
-  qtd: numeric("").notNull(),
-  unity: text("").notNull(),
+  description: text().notNull(),
+  ncm: text().notNull(),
+  price: numeric().notNull(),
+  qtd: numeric().notNull(),
+  unity: text().notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-  nfceId: uuid("nfce_id").notNull().references(() => nfce.id, { onDelete: "cascade" }),
-  categoryId: uuid("category_id").notNull().references(() => category.id, { onDelete: "set null" }),
+  nfceId: uuid("nfce_id")
+    .notNull()
+    .references(() => nfce.id, { onDelete: "cascade" }),
+  categoryId: uuid("category_id")
+    .notNull()
+    .references(() => category.id, { onDelete: "set null" }),
 });
 
 export const category = pgTable("category", {
-  id: uuid().primaryKey(),
+  id: uuid("id").primaryKey(),
   description: text("").notNull(),
-  code: text("").notNull().unique(),
+  code: text().notNull().unique(),
+  color: text().notNull(),
 });
 
 // RELATIONS -------------------------------------------------------------------------
