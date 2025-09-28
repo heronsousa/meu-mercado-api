@@ -5,19 +5,26 @@ import { getNfceByKey } from "../functions/get-nfce-by-key";
 import { NfceAlreadyExistsError } from "../functions/errors/nfce-already-exists";
 import { StatusCodes } from "../functions/errors/constants/status-code";
 import { createProducts } from "../functions/create-products";
+import { NfceKeyNotProvidedError } from "../functions/errors/nfce-key-not-provided";
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
+  const { nfce_key } = req.body;
+
+  console.log({ nfce_key });
+
+  if (!nfce_key) {
+    throw new NfceKeyNotProvidedError();
+  }
+
+  const existingNfce = await getNfceByKey(nfce_key);
+
+  if (existingNfce) {
+    throw new NfceAlreadyExistsError();
+  }
+
   try {
-    const { nfce_key } = req.body;
-    console.log({ nfce_key });
-    const existingNfce = await getNfceByKey(nfce_key);
-
-    if (existingNfce) {
-      throw new NfceAlreadyExistsError();
-    }
-
     const invoice = await getInvoice(nfce_key);
 
     const newNfce = await createNfce(invoice);

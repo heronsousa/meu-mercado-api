@@ -1,18 +1,13 @@
 import { BaseError } from './base-error';
-import { getStatus, NFCE_ALREADY_EXISTS } from './constants/messages';
-import { ErrorInterface } from './types';
+import { getStatus, NFCE_ALREADY_EXISTS } from "./constants/messages";
 
-export class NfceAlreadyExistsError extends BaseError implements ErrorInterface {
-  public code = NFCE_ALREADY_EXISTS.code;
-
-  public message = NFCE_ALREADY_EXISTS.message;
-
-  public status = getStatus(NFCE_ALREADY_EXISTS.statusCode);
-
-  public statusCode = NFCE_ALREADY_EXISTS.statusCode;
-
+export class NfceAlreadyExistsError extends BaseError {
   constructor() {
-    super();
-    this.name = 'NfceAlreadyExistsError';
+    super({
+      name: "NfceAlreadyExistsError",
+      message: NFCE_ALREADY_EXISTS.message,
+      status: getStatus(NFCE_ALREADY_EXISTS.statusCode),
+      statusCode: NFCE_ALREADY_EXISTS.statusCode,
+    });
   }
 }
