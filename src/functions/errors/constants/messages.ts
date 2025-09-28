@@ -10,21 +10,26 @@ export const getStatus = (statusCode: number): Status => {
 };
 
 export const NFCE_ALREADY_EXISTS = {
-  message: "Nfce already exists.",
+  message: "A NFC-e já existe.",
   statusCode: StatusCodes.CONFLICT,
 };
 
 export const ROUTE_NOT_FOUND = {
-  message: "The requested endpoint does not exist.",
+  message: "O endpoint solicitado não existe.",
   statusCode: StatusCodes.NOT_FOUND,
 };
 
 export const INTERNAL_ERROR = {
-  message: "The server encountered an internal error.",
+  message: "O servidor encontrou um erro interno..",
   statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
 };
 
 export const NFCE_KEY_NOT_PROVIDED = {
-  message: "Ncfe key was not provided.",
+  message: "A chave da NFC-e não foi fornecida.",
   statusCode: StatusCodes.BAD_REQUEST,
+};
+
+export const ERROR_GET_NFCE_DATA = {
+  message: "Erro ao buscar dados da nota fiscal.",
+  statusCode: StatusCodes.BAD_GATEWAY,
 };
