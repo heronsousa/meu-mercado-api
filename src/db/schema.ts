@@ -29,12 +29,12 @@ export const product = pgTable("product", {
     .references(() => nfce.id, { onDelete: "cascade" }),
   categoryId: uuid("category_id")
     .notNull()
-    .references(() => category.id, { onDelete: "set null" }),
+    .references(() => category.id, { onDelete: "cascade" }),
 });
 
 export const category = pgTable("category", {
   id: uuid("id").primaryKey(),
-  description: text("").notNull(),
+  description: text().notNull(),
   code: text().notNull().unique(),
   color: text().notNull(),
 });
@@ -50,11 +50,11 @@ export const categoryRelations = relations(category, ({ many }) => ({
 }));
 
 export const productRelations = relations(product, ({ one }) => ({
-  nfce: one(nfce,  {
+  nfce: one(nfce, {
     fields: [product.nfceId],
     references: [nfce.id],
   }),
-  category: one(category,  {
+  category: one(category, {
     fields: [product.categoryId],
     references: [category.id],
   }),
