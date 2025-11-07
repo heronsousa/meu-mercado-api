@@ -1,6 +1,7 @@
 import express, { ErrorRequestHandler } from "express";
 import dotenv from "dotenv";
 import nfceRouter from "./routes/nfce";
+import authRouter from "./routes/auth";
 import { RouteNotFoundError } from "./functions/errors/not-found";
 import { BaseError } from "./functions/errors/base-error";
 import { INTERNAL_ERROR } from "./functions/errors/constants/messages";
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/nfce", nfceRouter);
+app.use("/auth", authRouter);
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   if (err instanceof BaseError) {

@@ -1,4 +1,5 @@
 import express from "express";
+
 import { getInvoice } from "../services/infosimples";
 import { createNfce } from "../functions/create-nfce";
 import { getNfceByKey } from "../functions/get-nfce-by-key";
@@ -7,8 +8,8 @@ import { StatusCodes } from "../functions/errors/constants/status-code";
 import { createProducts } from "../functions/create-products";
 import { NfceKeyNotProvidedError } from "../functions/errors/nfce-key-not-provided";
 import { getNfceSummary } from "../functions/get-nfce-summary";
-
 import { getDashboardSummary } from "../functions/get-dashboard-summary";
+
 const router = express.Router();
 
 router.post("/", async (req, res) => {
