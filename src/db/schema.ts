@@ -21,6 +21,9 @@ export const nfce = pgTable("nfce", {
   totalPrice: numeric("total_price").notNull(),
   paymentMethod: text("payment_method").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
 });
 
 export const category = pgTable("category", {
@@ -108,8 +111,12 @@ export const verification = pgTable("verification", {
 
 // RELATIONS -------------------------------------------------------------------------
 
-export const nfceRelations = relations(nfce, ({ many }) => ({
+export const nfceRelations = relations(nfce, ({ many, one }) => ({
   products: many(product),
+  user: one(user, {
+    fields: [nfce.userId],
+    references: [user.id],
+  }),
 }));
 
 export const categoryRelations = relations(category, ({ many }) => ({
@@ -125,4 +132,8 @@ export const productRelations = relations(product, ({ one }) => ({
     fields: [product.categoryId],
     references: [category.id],
   }),
+}));
+
+export const userRelations = relations(user, ({ many }) => ({
+  nfce: many(nfce),
 }));
