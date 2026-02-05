@@ -2,9 +2,9 @@ import express, { ErrorRequestHandler } from "express";
 import dotenv from "dotenv";
 import nfceRouter from "./routes/nfce";
 import authRouter from "./routes/auth";
-import { RouteNotFoundError } from "./functions/errors/not-found";
-import { BaseError } from "./functions/errors/base-error";
-import { INTERNAL_ERROR } from "./functions/errors/constants/messages";
+import { RouteNotFoundError } from "./errors/not-found";
+import { BaseError } from "./errors/base-error";
+import { INTERNAL_ERROR } from "./errors/constants/messages";
 
 dotenv.config();
 
