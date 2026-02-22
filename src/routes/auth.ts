@@ -5,6 +5,6 @@ import { auth } from "../lib/auth";
 
 const router = express.Router();
 
-router.all("/*", toNodeHandler(auth));
+router.use(toNodeHandler(auth));
 
 export default router;
