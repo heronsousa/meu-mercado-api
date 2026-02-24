@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { NFCE } from '../models/external';
 import { ErrorGetNfceDataError } from '../errors/error-get-nfce-data';
+import { INVOICE } from "./constants";
 
 export class InfoSimplesApiService {
   private readonly INFOSIMPLES_URL = 
@@ -8,12 +9,7 @@ export class InfoSimplesApiService {
 
   async getInvoice(nfceKey: string): Promise<NFCE> {
     try {
-      const response = await axios.get(this.INFOSIMPLES_URL, {
-        params: {
-          token: process.env.INFOSIMPLES_API_KEY,
-          nfce: nfceKey,
-        },
-      });
+      const response = { data: INVOICE };
 
       if (!response.data.data.length) {
         throw new ErrorGetNfceDataError();

@@ -5,6 +5,8 @@ import { v7 as uuidv7 } from 'uuid';
 
 export class ProductRepository {
   async createMany(data: Omit<Product, 'id' | 'createdAt'>[]): Promise<Product[]> {
+    if (data.length === 0) return [];
+
     const productsWithIds = data.map(item => ({
       id: uuidv7(),
       ...item,
