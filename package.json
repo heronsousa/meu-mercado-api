@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/app.ts",
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "start": "ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -24,6 +24,7 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "sst": "4.2.2",
     "@types/express": "^5.0.3",
     "@types/node": "^24.4.0",
     "@types/pg": "^8.16.0",
