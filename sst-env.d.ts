@@ -6,7 +6,19 @@
 
 declare module "sst" {
   export interface Resource {
+    "BETTER_AUTH_SECRET": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "BetterAuthSecret": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "DATABASE_URL": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "INFOSIMPLES_API_KEY": {
       "type": "sst.sst.Secret"
       "value": string
     }
@@ -14,17 +26,9 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "MeuMercadoDB": {
-      "database": string
-      "host": string
-      "password": string
-      "port": number
-      "type": "sst.aws.Postgres"
-      "username": string
-    }
-    "MeuMercadoService": {
-      "service": string
-      "type": "sst.aws.Service"
+    "MeuMercadoAPI": {
+      "name": string
+      "type": "sst.aws.Function"
       "url": string
     }
     "MeuMercadoVpc": {

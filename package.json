@@ -21,13 +21,14 @@
     "drizzle-orm": "^0.44.7",
     "express": "^5.1.0",
     "pg": "^8.16.3",
+    "serverless-http": "^4.0.0",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "sst": "4.2.2",
     "@types/express": "^5.0.3",
     "@types/node": "^24.4.0",
     "@types/pg": "^8.16.0",
+    "sst": "4.2.2",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^1.1.8",
     "typescript": "^5.9.2"

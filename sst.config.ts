@@ -10,27 +10,22 @@ export default $config({
     };
   },
   async run() {
-    const vpc = new sst.aws.Vpc("MeuMercadoVpc");
-    const cluster = new sst.aws.Cluster("MeuMercadoCluster", {
-      vpc,
-    });
-
-    const service = new sst.aws.Service("MeuMercadoService", {
-      cluster,
-      loadBalancer: {
-        ports: [{ listen: "80/http", forward: "3000/http" }],
+    const api = new sst.aws.Function("MeuMercadoAPI", {
+      handler: "src/lambda.handler",
+      runtime: "nodejs20.x",
+      timeout: "30 seconds",
+      memory: "512 MB",
+      environment: {
+        DATABASE_URL: new sst.Secret("DATABASE_URL").value,
+        INFOSIMPLES_API_KEY: new sst.Secret("INFOSIMPLES_API_KEY").value,
+        BETTER_AUTH_SECRET: new sst.Secret("BETTER_AUTH_SECRET").value,
+        NODE_ENV: "production",
       },
-      dev: {
-        command: "npm run dev",
-      },
-      image: {
-        context: ".",
-        dockerfile: "Dockerfile",
-      },
+      url: true,
     });
 
     return {
-      api: service.url,
+      api: api.url,
     };
   },
 });
