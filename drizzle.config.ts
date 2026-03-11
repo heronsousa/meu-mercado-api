@@ -1,4 +1,3 @@
-import { Resource } from "sst";
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
@@ -6,10 +5,6 @@ export default defineConfig({
   schema: "./src/database/schema.ts",
   out: "./drizzle",
   dbCredentials: {
-    host: Resource.MeuMercadoDB.host,
-    port: Resource.MeuMercadoDB.port,
-    user: Resource.MeuMercadoDB.username,
-    password: Resource.MeuMercadoDB.password,
-    database: Resource.MeuMercadoDB.database,
+    url: process.env.DATABASE_URL!,
   },
 });
