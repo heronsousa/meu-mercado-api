@@ -19,8 +19,10 @@ jobs:
           node-version: 22
       - run: npm ci
       - run: |
-          npx sst secret set DATABASE_URL "${{ secrets.DATABASE_URL }}"
-          npx sst secret set INFOSIMPLES_API_KEY "${{ secrets.INFOSIMPLES_API_KEY }}"
-          npx sst secret set BETTER_AUTH_SECRET "${{ secrets.BETTER_AUTH_SECRET }}"
+          mkdir -p ~/.aws
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+          echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
       - run: npm run deploy
+      - run: rm -rf ~/.aws
 
