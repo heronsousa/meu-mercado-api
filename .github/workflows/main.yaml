@@ -23,12 +23,12 @@ jobs:
 
       - name: Set SST credentials
         run: |
-          npx sst secret set DATABASE_URL "sua_url" --stage production
-          npx sst secret set INFOSIMPLES_API_KEY "sua_key" --stage production
-          npx sst secret set BETTER_AUTH_SECRET "seu_secret" --stage production
+          npx sst secret set DATABASE_URL "${{ secrets.DATABASE_URL }}" --stage production
+          npx sst secret set INFOSIMPLES_API_KEY "${{ secrets.INFOSIMPLES_API_KEY }}" --stage production
+          npx sst secret set BETTER_AUTH_SECRET "${{ secrets.BETTER_AUTH_SECRET }}" --stage production
 
       - name: Deploy to AWS
-        run: npm run deploy --stage production
+        run: npm run deploy
       
       - name: Clean up
         run: rm -rf ~/.aws
