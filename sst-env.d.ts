@@ -10,10 +10,6 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "BetterAuthSecret": {
-      "type": "sst.sst.Secret"
-      "value": string
-    }
     "DATABASE_URL": {
       "type": "sst.sst.Secret"
       "value": string
@@ -22,17 +18,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "InfoSimplesApiKey": {
-      "type": "sst.sst.Secret"
-      "value": string
-    }
     "MeuMercadoAPI": {
       "name": string
       "type": "sst.aws.Function"
       "url": string
-    }
-    "MeuMercadoVpc": {
-      "type": "sst.aws.Vpc"
     }
   }
 }
