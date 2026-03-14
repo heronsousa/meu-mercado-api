@@ -17,12 +17,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm ci
-      - run: |
+      
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create credentials file for AWS
+        run: |
           mkdir -p ~/.aws
           echo "[default]" > ~/.aws/credentials
           echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
           echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
-      - run: npm run deploy
-      - run: rm -rf ~/.aws
+
+      - name: Configure SST secrets
+        run: npx secrets set COMMIT_SHA '${{ github.sha }}' --stage production
+
+      - name: Deploy to AWS
+        run: npm run deploy
+      
+      - name: Clean up
+        run: rm -rf ~/.aws
 
