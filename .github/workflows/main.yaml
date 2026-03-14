@@ -21,13 +21,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Configure SST secrets
+      - name: Create credentials file for AWS
         run: |
-          npx sst secret set DATABASE_URL "${{ secrets.DATABASE_URL }}" --stage production
-          npx sst secret set INFOSIMPLES_API_KEY "${{ secrets.INFOSIMPLES_API_KEY }}" --stage production
-          npx sst secret set BETTER_AUTH_SECRET "${{ secrets.BETTER_AUTH_SECRET }}" --stage production
+          mkdir -p ~/.aws
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+          echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+
+      - name: Configure SST secrets
+        run: npx sst secret set COMMIT_SHA '${{ github.sha }}'
 
       - name: Deploy to AWS
-        run: npm run deploy --stage production
+        run: npm run deploy
       
+      - name: Clean up
+        run: rm -rf ~/.aws
 
