@@ -1,0 +1,35 @@
+name: API CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set SST credentials
+        run: |
+          npx sst secret set DATABASE_URL "${{ secrets.DATABASE_URL }}" --stage production
+          npx sst secret set INFOSIMPLES_API_KEY "${{ secrets.INFOSIMPLES_API_KEY }}" --stage production
+          npx sst secret set BETTER_AUTH_SECRET "${{ secrets.BETTER_AUTH_SECRET }}" --stage production
+
+      - name: Deploy to AWS
+        run: npm run deploy
+      
+      - name: Clean up
+        run: rm -rf ~/.aws
+
