@@ -9,6 +9,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      repository-projects: write
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -28,8 +31,13 @@ jobs:
           npx sst secret set BETTER_AUTH_SECRET "${{ secrets.BETTER_AUTH_SECRET }}" --stage production
 
       - name: Deploy to AWS
-        run: npm run deploy
-      
-      - name: Clean up
-        run: rm -rf ~/.aws
+        run: npx sst deploy --stage production --print-logs
+
+      - name: Update repository description with API URL
+        run: |
+          API_URL=$(node -e "const o = require('./.sst/outputs.json'); console.log(o.api)")
+          curl -s -X PATCH https://api.github.com/repos/${{ github.repository }} \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"homepage\": \"$API_URL\"}"
 
