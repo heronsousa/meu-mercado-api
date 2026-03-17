@@ -35,7 +35,7 @@ jobs:
       - name: Update repository description with API URL
         run: |
           API_URL=$(node -e "const o = require('./.sst/outputs.json'); console.log(o.api)")
-          curl -s -X PATCH https://api.github.com/repos/${{ github.repository }} \
+          curl -s -o /dev/null -X PATCH https://api.github.com/repos/${{ github.repository }} \
             -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
             -H "Content-Type: application/json" \
             -d "{\"homepage\": \"$API_URL\"}"
